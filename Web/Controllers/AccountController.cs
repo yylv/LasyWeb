@@ -6,12 +6,26 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using Web.Models;
+using DB.Model;
+using DB.Model.Service;
 
 namespace Web.Controllers
 {
     public class AccountController : Controller
     {
-
+        private UserService userService;
+        protected UserService UserService
+        {
+            get 
+            {
+                if (this.userService == null)
+                {
+                    this.userService = new UserService();
+                }
+                return this.userService;
+            }
+            set { }
+        }
         //
         // GET: /Account/LogOn
 
@@ -28,7 +42,10 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                var user=this.UserService.GetNewUser();
+                user.UserName = model.UserName;
+                user.Pwd = model.Password;
+                if (this.UserService.Login(user))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
@@ -78,17 +95,24 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 // 尝试注册用户
-                MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
+                //MembershipCreateStatus createStatus;
+                //Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
+                var user=this.UserService.GetNewUser();
+                user.UserName = model.UserName;
+                user.Pwd=model.Password;
+                user.Email = model.Email;
+                user.RoleID = "d6d2469a-bc0d-49e4-8a0e-f65d4af1d10c";
+                var result=this.UserService.Regist(user);
 
-                if (createStatus == MembershipCreateStatus.Success)
+                //if (createStatus == MembershipCreateStatus.Success)
+                if(!result.HasError)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                    ModelState.AddModelError("", result.ErrorMsg);
                 }
             }
 
