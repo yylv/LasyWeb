@@ -10,8 +10,27 @@ namespace ViewModel.Models
     {
     }
 
+    public class PostModelBaseList
+    {
+        [Required]
+        [Display(Name = "板块主题")]
+        public string SubjectName { get; set; }
+
+        [Required]
+        [Display(Name = "板块ID")]
+        public string SubjectID { get; set; }
+
+        public List<PostModelBase> PostModels { get; set; }
+    }
+
     public class PostModelBase
     {
+        public string PostId { get; set; }
+
+
+        [Display(Name = "板块主题")]
+        public List<SubjectModel> SubjectList { get; set; }
+
         [Required]
         [Display(Name = "板块主题")]
         public string SubjectName { get; set; }

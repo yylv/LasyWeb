@@ -118,7 +118,6 @@ namespace DB.Model.Service
                         PostContentType = PostContentType.TextContents,
                         TopicContent = textContent.Content
                     };
-                    break;
                 case PostContentType.Votes:
                     var item= new VotePostModle()
                     {
@@ -132,10 +131,8 @@ namespace DB.Model.Service
                     var list = from it in voteItems select new VotesItemModel() { };
                     item.VoteItems = list.ToList();
                     return item;
-                    break;
                 default:
                     return null;
-                    break;
             }
             
         }
