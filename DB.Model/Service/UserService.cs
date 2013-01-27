@@ -64,5 +64,19 @@ namespace DB.Model.Service
             user = us;
             return true;
         }
+
+        public User GetUserById(string id)
+        {
+            var us = (from u in this.Users where u.UserID == id select u).FirstOrDefault();
+            return us;
+        }
+
+        public bool ChangePassword(Models.User user,string newPwd)
+        {
+            var us = (from u in this.Users where u.Pwd == user.Pwd && u.UserName == user.UserName select u).FirstOrDefault();
+            us.Pwd = newPwd;
+            this.DBContext.SaveChanges();
+            return true;
+        }
     }
 }

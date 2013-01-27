@@ -47,7 +47,8 @@ namespace Web.Controllers
                 user.Pwd = model.Password;
                 if (this.UserService.Login(user))
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    //Session["user"] = user;
+                    FormsAuthentication.SetAuthCookie(user.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
@@ -107,7 +108,8 @@ namespace Web.Controllers
                 //if (createStatus == MembershipCreateStatus.Success)
                 if(!result.HasError)
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+                    //Session["user"] = user;
+                    FormsAuthentication.SetAuthCookie(user.UserName, false /* createPersistentCookie */);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -144,8 +146,10 @@ namespace Web.Controllers
                 bool changePasswordSucceeded;
                 try
                 {
-                    MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
-                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    var currentUser = this.UserService.GetNewUser();
+                    currentUser.UserName = HttpContext.User.Identity.Name;
+                    currentUser.Pwd = model.OldPassword;
+                    changePasswordSucceeded = this.UserService.ChangePassword(currentUser, model.NewPassword);
                 }
                 catch (Exception)
                 {
