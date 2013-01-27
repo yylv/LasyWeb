@@ -78,6 +78,24 @@ namespace DB.Model.Service
                        };
             return list.ToList();
         }
+        public List<PostModel> PageListPosts(int pageNum,int pageSize)
+        {
+            var list = this.Articles.Where(a => this.Articles.Any()).Skip(pageSize * pageNum).Take(pageSize).ToList();
+            List<PostModel> postModels = new List<PostModel>();
+            foreach (var item in list)
+            {
+                postModels.Add(new PostModel() 
+                {
+                    AddDateTime = item.AddTime,
+                    SubjectID = item.SubjectID,
+                    SubjectName = item.Subject.Name,
+                    TopicContent = item.TextContents.FirstOrDefault().Content,
+                    TopicName = item.Tittle
+                });
+            }
+            return postModels;
+                       
+        }
     }
 
     public enum ContentType
