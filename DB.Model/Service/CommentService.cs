@@ -39,7 +39,7 @@ namespace DB.Model.Service
             var list = from item in this.Comments
                        select new CommentModel()
                        {
-                            CommentTopic = item.Article.Tittle,
+                            CommentPostID =item.ArticleID,
                            CommentTime = item.CommentTime,
                            CommentContent = item.Content,
                            UserID=    item.UserID,
@@ -55,7 +55,7 @@ namespace DB.Model.Service
             {
                 CommentModels.Add(new CommentModel() 
                 {
-                           CommentTopic= item.Article.Tittle,
+                    CommentPostID=item.ArticleID,
                            CommentTime = item.CommentTime,
                            CommentContent = item.Content,
                            UserID=    item.UserID,
@@ -65,6 +65,5 @@ namespace DB.Model.Service
             return CommentModels;
                        
         }
-    }
     }
 }

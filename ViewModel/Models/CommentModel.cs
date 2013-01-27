@@ -19,12 +19,16 @@ namespace ViewModel.Models
         [Display(Name = "评价内容")]
         public string CommentContent { get; set; }
 
-        [Required]
-        [Display(Name = "评价帖子")]
-        public string CommentTopic { get; set; }
+        [Display(Name = "帖子ID")]
+        public string CommentPostID { get; set; }
 
         [Required]
         [Display(Name = "评论时间")]
         public DateTime CommentTime { get; set; }
+
+        public static void Add(CommentModel commentModel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

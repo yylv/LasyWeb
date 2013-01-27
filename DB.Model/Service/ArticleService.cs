@@ -88,7 +88,25 @@ namespace DB.Model.Service
             return list.ToList();
         }
 
-        private PostModelBase GetPostModelFromArticle(Article article,TextContent textContent,Vote vote,list<VoteItem> voteItems)
+        public List<PostModelBase> PageListPosts(int pageNum,int pageSize)
+        {
+            var list = this.Articles.Where(a => this.Articles.Any()).Skip(pageSize * pageNum).Take(pageSize).ToList();
+            List<PostModelBase> postModels = new List<PostModelBase>();
+            foreach (var item in list)
+            {
+                postModels.Add(new PostModelBase() 
+                {
+                    AddDateTime = item.AddTime,
+                    SubjectID = item.SubjectID,
+                    SubjectName = item.Subject.Name,
+                    TopicName = item.Tittle
+                });
+            }
+            return postModels;
+                       
+        }
+
+        private PostModelBase GetPostModelFromArticle(Article article, TextContent textContent, Vote vote, List<VotesItemModel> voteItems)
         {
             switch ((PostContentType)article.ContentType)
             {
@@ -113,8 +131,8 @@ namespace DB.Model.Service
                         PostContentType = PostContentType.TextContents,
                         IsMutipleVote = vote.IsMultiple > 1,
                     };
-                    var list = from it in voteItems select new VotesItem() { };
-                    item.VoteItems = list;
+                    var list = from it in voteItems select new VotesItemModel() { };
+                    item.VoteItems = list.ToList();
                     return item;
                     break;
                 default:
