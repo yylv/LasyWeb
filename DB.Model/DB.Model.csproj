@@ -136,6 +136,12 @@
   <ItemGroup>
     <Folder Include="IDBA\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ViewModel\ViewModel.csproj">
+      <Project>{4f2c32eb-6892-449e-a5ac-6878f194391f}</Project>
+      <Name>ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

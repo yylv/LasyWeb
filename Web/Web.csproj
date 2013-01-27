@@ -94,10 +94,14 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\CommentModel.cs" />
+    <Compile Include="Models\PostModel.cs" />
+    <Compile Include="Models\VoteModle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +211,10 @@
     <ProjectReference Include="..\DB.Model\DB.Model.csproj">
       <Project>{6816e2b4-a7f9-4666-90f1-ee0cba3d9463}</Project>
       <Name>DB.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewModel\ViewModel.csproj">
+      <Project>{4f2c32eb-6892-449e-a5ac-6878f194391f}</Project>
+      <Name>ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
