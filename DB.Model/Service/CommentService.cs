@@ -40,7 +40,6 @@ namespace DB.Model.Service
                        select new CommentModel()
                        {
                               
-                           CommentPostID = item.ArticleID,
                            CommentTime = item.CommentTime,
                            CommentContent = item.Content,
                            UserID=    item.UserID,
@@ -54,9 +53,8 @@ namespace DB.Model.Service
             List<CommentModel> CommentModels = new List<CommentModel>();
             foreach (var item in list)
             {
-                CommentModel.Add(new CommentModel() 
+                CommentModels.Add(new CommentModel() 
                 {
-                           CommentPostID = item.ArticleID,
                            CommentTime = item.CommentTime,
                            CommentContent = item.Content,
                            UserID=    item.UserID,
