@@ -24,6 +24,9 @@ namespace ViewModel.Models
         [Display(Name = "帖子内容")]
         public string TopicContent { get; set; }
 
+        [Display(Name = "相关评价")]
+        public List<CommentModel> Comment { get; set; }
+
         [Required]
         [Display(Name = "发表时间")]
         public DateTime AddDateTime { get; set; }

@@ -31,6 +31,10 @@ namespace ViewModel.Models
         [Display(Name = "投票选项")]
         public List<VoteItem> SingleVoteItem { get; set; }
 
+        [Required]
+        [Display(Name = "多选")]
+        public bool IsMutipleVote { get; set; }
+
     }
 
 }
