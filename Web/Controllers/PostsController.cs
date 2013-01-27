@@ -81,13 +81,12 @@ namespace Web.Controllers
         // POST: /Posts/Create
 
         [HttpPost]
-        public ActionResult Create(PostModel model)
+        public ActionResult Create(PostModelBase model)
         {
             try
             {
-                var article = this.ArticleService.GetNewArticle();
-                article.SubjectID = model.SubjectID;
-               // var content=this.TextContentService.
+                var result=this.ArticleService.AddNewArticle(model);
+                
                 return RedirectToAction("Index");
             }
             catch
@@ -99,16 +98,24 @@ namespace Web.Controllers
         //
         // GET: /Posts/Edit/5
  
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            try
+            {
+                PostModelBase model = this.ArticleService.GetPostModelById(id);
+                return View(model);
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         //
         // POST: /Posts/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, PostModel model)
+        public ActionResult Edit(int id, PostModelBase model)
         {
             try
             {
@@ -125,8 +132,9 @@ namespace Web.Controllers
         //
         // GET: /Posts/Delete/5
  
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
+            this.ArticleService.DeletePostById(id);
             return View();
         }
 
@@ -134,11 +142,11 @@ namespace Web.Controllers
         // POST: /Posts/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, PostModel model)
+        public ActionResult Delete(int id, PostModelBase model)
         {
             try
             {
-                // TODO: Add delete logic here
+                //this.ArticleService.DeletePost(model);
  
                 return RedirectToAction("Index");
             }
