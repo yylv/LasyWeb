@@ -24,7 +24,6 @@ namespace DB.Model.Models
         {
             throw new UnintentionalCodeFirstException();
         }
-    
         public DbSet<Article> Articles { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Permission> Permissions { get; set; }
