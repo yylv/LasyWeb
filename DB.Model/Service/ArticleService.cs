@@ -34,7 +34,7 @@ namespace DB.Model.Service
         {
             content.ArticleID = textArticle.ArticleID = Guid.NewGuid().ToString();
             content.ContentID = textArticle.ContentID = Guid.NewGuid().ToString();
-            textArticle.ContentType = (int)ContentType.TextContents;
+            textArticle.ContentType = (int)PostContentType.TextContents;
             textArticle.TextContents.Clear();
             textArticle.TextContents.Add(content);
             textArticle.AddTime = DateTime.Now;
@@ -55,7 +55,7 @@ namespace DB.Model.Service
         {
             vote.ArticleID = article.ArticleID = Guid.NewGuid().ToString();
             vote.VoteID = article.ContentID = Guid.NewGuid().ToString();
-            article.ContentType = (int)ContentType.TextContents;
+            article.ContentType = (int)PostContentType.TextContents;
             article.Votes.Clear();
             article.Votes.Add(vote);
             article.AddTime = DateTime.Now;
@@ -64,26 +64,81 @@ namespace DB.Model.Service
             return new ArticleOpResult() { HasError = false, ArticleID = article.ArticleID };
         }
 
-        public List<PostModel> ListAllPosts()
+        public List<PostModelBase> ListAllPosts()
         {
 
             var list = from item in this.Articles
-                       select new PostModel()
+                       select (PostContentType)item.ContentType == PostContentType.TextContents ?
+                       new ContentPostModel()
                        {
                            AddDateTime = item.AddTime,
                            SubjectID = item.SubjectID,
                            SubjectName = item.Subject.Name,
-                           TopicContent = item.TextContents.FirstOrDefault().Content,
-                           TopicName = item.Tittle
-                       };
+                           TopicName = item.Tittle,
+                           PostContentType=PostContentType.TextContents,
+                       } as PostModelBase :
+                       new VotePostModle()
+                       {
+                           AddDateTime = item.AddTime,
+                           SubjectID = item.SubjectID,
+                           SubjectName = item.Subject.Name,
+                           TopicName = item.Tittle,
+                           PostContentType = PostContentType.Votes,
+                       } as PostModelBase;
             return list.ToList();
+        }
+
+        private PostModelBase GetPostModelFromArticle(Article article,TextContent textContent,Vote vote,list<VoteItem> voteItems)
+        {
+            switch ((PostContentType)article.ContentType)
+            {
+                case PostContentType.TextContents:
+                    return new ContentPostModel()
+                    {
+                        AddDateTime = article.AddTime,
+                        SubjectID = article.SubjectID,
+                        SubjectName = article.Subject.Name,
+                        TopicName = article.Tittle,
+                        PostContentType = PostContentType.TextContents,
+                        TopicContent = textContent.Content
+                    };
+                    break;
+                case PostContentType.Votes:
+                    var item= new VotePostModle()
+                    {
+                        AddDateTime = article.AddTime,
+                        SubjectID = article.SubjectID,
+                        SubjectName = article.Subject.Name,
+                        TopicName = article.Tittle,
+                        PostContentType = PostContentType.TextContents,
+                        IsMutipleVote = vote.IsMultiple > 1,
+                    };
+                    var list = from it in voteItems select new VotesItem() { };
+                    item.VoteItems = list;
+                    return item;
+                    break;
+                default:
+                    return null;
+                    break;
+            }
+            
+        }
+
+        public ArticleOpResult AddNewArticle(PostModelBase model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PostModelBase GetPostModelById(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeletePostById(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 
-    public enum ContentType
-    {
-        UnKnow=0,
-        Votes=1,
-        TextContents=2,
-    }
+    
 }
