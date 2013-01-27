@@ -113,7 +113,7 @@ namespace DB.Model.Service
                         PostContentType = PostContentType.TextContents,
                         IsMutipleVote = vote.IsMultiple > 1,
                     };
-                    var list = from it in voteItems select new VotesItem() { };
+                    var list = from it in voteItems select new VotesItemModel() { };
                     item.VoteItems = list;
                     return item;
                     break;

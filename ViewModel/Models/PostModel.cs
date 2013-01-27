@@ -42,7 +42,7 @@ namespace ViewModel.Models
         public string TopicContent { get; set; }
     }
 
-    public class VotesItem
+    public class VotesItemModel
     {
         [Display(Name = "选项ID")]
         public string ItemID { get; set; }
@@ -57,7 +57,7 @@ namespace ViewModel.Models
 
         [Required]
         [Display(Name = "投票选项")]
-        public List<VotesItem> VoteItems { get; set; }
+        public List<VotesItemModel> VoteItems { get; set; }
 
         [Required]
         [Display(Name = "多选")]
