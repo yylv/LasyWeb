@@ -1,0 +1,739 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB.Model.Models.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="DBModelModelsStoreContainer">
+          <EntitySet Name="Articles" EntityType="DB.Model.Models.Store.Articles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Comments" EntityType="DB.Model.Models.Store.Comments" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Permissions" EntityType="DB.Model.Models.Store.Permissions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Roles" EntityType="DB.Model.Models.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Subjects" EntityType="DB.Model.Models.Store.Subjects" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="DB.Model.Models.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TextContents" EntityType="DB.Model.Models.Store.TextContents" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="DB.Model.Models.Store.Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UsersVote" EntityType="DB.Model.Models.Store.UsersVote" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="VoteItems" EntityType="DB.Model.Models.Store.VoteItems" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Votes" EntityType="DB.Model.Models.Store.Votes" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="article_commentid" Association="DB.Model.Models.Store.article_commentid">
+            <End Role="Articles" EntitySet="Articles" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_User" Association="DB.Model.Models.Store.FK_Article_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Articles" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_User" Association="DB.Model.Models.Store.FK_Comment_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TextContents_Articles" Association="DB.Model.Models.Store.FK_TextContents_Articles">
+            <End Role="Articles" EntitySet="Articles" />
+            <End Role="TextContents" EntitySet="TextContents" />
+          </AssociationSet>
+          <AssociationSet Name="fk_userid" Association="DB.Model.Models.Store.fk_userid">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Votes_Articles" Association="DB.Model.Models.Store.FK_Votes_Articles">
+            <End Role="Articles" EntitySet="Articles" />
+            <End Role="Votes" EntitySet="Votes" />
+          </AssociationSet>
+          <AssociationSet Name="subject_articleid" Association="DB.Model.Models.Store.subject_articleid">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Articles" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="User_uervoteid" Association="DB.Model.Models.Store.User_uervoteid">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersVote" EntitySet="UsersVote" />
+          </AssociationSet>
+          <AssociationSet Name="Vote_VoteItemid" Association="DB.Model.Models.Store.Vote_VoteItemid">
+            <End Role="Votes" EntitySet="Votes" />
+            <End Role="VoteItems" EntitySet="VoteItems" />
+          </AssociationSet>
+          <AssociationSet Name="VoteItem_UserVoteid" Association="DB.Model.Models.Store.VoteItem_UserVoteid">
+            <End Role="VoteItems" EntitySet="VoteItems" />
+            <End Role="UsersVote" EntitySet="UsersVote" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Articles">
+          <Key>
+            <PropertyRef Name="ArticleID" />
+          </Key>
+          <Property Name="ArticleID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="SubjectID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="AddTime" Type="datetime" Nullable="false" />
+          <Property Name="UserID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="Tittle" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="ContentID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="ContentType" Type="bigint" Nullable="false" />
+          <Property Name="UpdateTime" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="ArticleID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="UserID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="Comment" Type="nvarchar" Nullable="false" MaxLength="2000" />
+          <Property Name="CommentTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permissions">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="Operation" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Code" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="RoleName" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="RoleCode" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="ParentID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="AddDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TextContents">
+          <Key>
+            <PropertyRef Name="ContentID" />
+          </Key>
+          <Property Name="ContentID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="ContentType" Type="bigint" Nullable="false" />
+          <Property Name="Content" Type="nvarchar" Nullable="false" MaxLength="2000" />
+          <Property Name="ArticleID" Type="nchar" Nullable="false" MaxLength="36" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Pwd" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="nchar" Nullable="false" MaxLength="255" />
+          <Property Name="LastLoginTime" Type="datetime" Nullable="false" />
+          <Property Name="RegistTime" Type="datetime" Nullable="false" />
+          <Property Name="RoleID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="IsAdmin" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersVote">
+          <Key>
+            <PropertyRef Name="UserVoteID" />
+          </Key>
+          <Property Name="UserID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="VoteID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="VoteItemID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="UserVoteID" Type="nchar" Nullable="false" MaxLength="36" />
+        </EntityType>
+        <EntityType Name="VoteItems">
+          <Key>
+            <PropertyRef Name="VoteItemID" />
+          </Key>
+          <Property Name="VoteItemID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="VoteItemContent" Type="nvarchar" Nullable="false" MaxLength="1000" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="VoteID" Type="nchar" Nullable="false" MaxLength="36" />
+        </EntityType>
+        <EntityType Name="Votes">
+          <Key>
+            <PropertyRef Name="VoteID" />
+          </Key>
+          <Property Name="VoteID" Type="nchar" Nullable="false" MaxLength="36" />
+          <Property Name="IsMultiple" Type="int" Nullable="false" />
+          <Property Name="ArticleID" Type="nchar" Nullable="false" MaxLength="36" />
+        </EntityType>
+        <Association Name="article_commentid">
+          <End Role="Articles" Type="DB.Model.Models.Store.Articles" Multiplicity="1" />
+          <End Role="Comments" Type="DB.Model.Models.Store.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articles">
+              <PropertyRef Name="ArticleID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="ArticleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_User">
+          <End Role="Users" Type="DB.Model.Models.Store.Users" Multiplicity="1" />
+          <End Role="Articles" Type="DB.Model.Models.Store.Articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Articles">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_User">
+          <End Role="Users" Type="DB.Model.Models.Store.Users" Multiplicity="1" />
+          <End Role="Comments" Type="DB.Model.Models.Store.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TextContents_Articles">
+          <End Role="Articles" Type="DB.Model.Models.Store.Articles" Multiplicity="1" />
+          <End Role="TextContents" Type="DB.Model.Models.Store.TextContents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articles">
+              <PropertyRef Name="ArticleID" />
+            </Principal>
+            <Dependent Role="TextContents">
+              <PropertyRef Name="ArticleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_userid">
+          <End Role="Roles" Type="DB.Model.Models.Store.Roles" Multiplicity="1" />
+          <End Role="Users" Type="DB.Model.Models.Store.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Votes_Articles">
+          <End Role="Articles" Type="DB.Model.Models.Store.Articles" Multiplicity="1" />
+          <End Role="Votes" Type="DB.Model.Models.Store.Votes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articles">
+              <PropertyRef Name="ArticleID" />
+            </Principal>
+            <Dependent Role="Votes">
+              <PropertyRef Name="ArticleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subject_articleid">
+          <End Role="Subjects" Type="DB.Model.Models.Store.Subjects" Multiplicity="1" />
+          <End Role="Articles" Type="DB.Model.Models.Store.Articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="Articles">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_uervoteid">
+          <End Role="Users" Type="DB.Model.Models.Store.Users" Multiplicity="1" />
+          <End Role="UsersVote" Type="DB.Model.Models.Store.UsersVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UsersVote">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Vote_VoteItemid">
+          <End Role="Votes" Type="DB.Model.Models.Store.Votes" Multiplicity="1" />
+          <End Role="VoteItems" Type="DB.Model.Models.Store.VoteItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Votes">
+              <PropertyRef Name="VoteID" />
+            </Principal>
+            <Dependent Role="VoteItems">
+              <PropertyRef Name="VoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VoteItem_UserVoteid">
+          <End Role="VoteItems" Type="DB.Model.Models.Store.VoteItems" Multiplicity="1" />
+          <End Role="UsersVote" Type="DB.Model.Models.Store.UsersVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoteItems">
+              <PropertyRef Name="VoteItemID" />
+            </Principal>
+            <Dependent Role="UsersVote">
+              <PropertyRef Name="VoteItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB.Model.Models" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LasyDBContext" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Articles" EntityType="DB.Model.Models.Article" />
+          <EntitySet Name="Comments" EntityType="DB.Model.Models.Comment" />
+          <EntitySet Name="Permissions" EntityType="DB.Model.Models.Permission" />
+          <EntitySet Name="Roles" EntityType="DB.Model.Models.Role" />
+          <EntitySet Name="Subjects" EntityType="DB.Model.Models.Subject" />
+          <EntitySet Name="sysdiagrams" EntityType="DB.Model.Models.sysdiagram" />
+          <EntitySet Name="TextContents" EntityType="DB.Model.Models.TextContent" />
+          <EntitySet Name="Users" EntityType="DB.Model.Models.User" />
+          <EntitySet Name="UsersVotes" EntityType="DB.Model.Models.UsersVote" />
+          <EntitySet Name="VoteItems" EntityType="DB.Model.Models.VoteItem" />
+          <EntitySet Name="Votes" EntityType="DB.Model.Models.Vote" />
+          <AssociationSet Name="article_commentid" Association="DB.Model.Models.article_commentid">
+            <End Role="Articles" EntitySet="Articles" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_User" Association="DB.Model.Models.FK_Article_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Articles" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TextContents_Articles" Association="DB.Model.Models.FK_TextContents_Articles">
+            <End Role="Articles" EntitySet="Articles" />
+            <End Role="TextContents" EntitySet="TextContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Votes_Articles" Association="DB.Model.Models.FK_Votes_Articles">
+            <End Role="Articles" EntitySet="Articles" />
+            <End Role="Votes" EntitySet="Votes" />
+          </AssociationSet>
+          <AssociationSet Name="subject_articleid" Association="DB.Model.Models.subject_articleid">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Articles" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_User" Association="DB.Model.Models.FK_Comment_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_userid" Association="DB.Model.Models.fk_userid">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="User_uervoteid" Association="DB.Model.Models.User_uervoteid">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersVote" EntitySet="UsersVotes" />
+          </AssociationSet>
+          <AssociationSet Name="VoteItem_UserVoteid" Association="DB.Model.Models.VoteItem_UserVoteid">
+            <End Role="VoteItems" EntitySet="VoteItems" />
+            <End Role="UsersVote" EntitySet="UsersVotes" />
+          </AssociationSet>
+          <AssociationSet Name="Vote_VoteItemid" Association="DB.Model.Models.Vote_VoteItemid">
+            <End Role="Votes" EntitySet="Votes" />
+            <End Role="VoteItems" EntitySet="VoteItems" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="ArticleID" />
+          </Key>
+          <Property Name="ArticleID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="SubjectID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="AddTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="Tittle" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ContentID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="ContentType" Type="Int64" Nullable="false" />
+          <Property Name="UpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Comments" Relationship="DB.Model.Models.article_commentid" FromRole="Articles" ToRole="Comments" />
+          <NavigationProperty Name="User" Relationship="DB.Model.Models.FK_Article_User" FromRole="Articles" ToRole="Users" />
+          <NavigationProperty Name="TextContents" Relationship="DB.Model.Models.FK_TextContents_Articles" FromRole="Articles" ToRole="TextContents" />
+          <NavigationProperty Name="Votes" Relationship="DB.Model.Models.FK_Votes_Articles" FromRole="Articles" ToRole="Votes" />
+          <NavigationProperty Name="Subject" Relationship="DB.Model.Models.subject_articleid" FromRole="Articles" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="ArticleID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="2000" Unicode="true" FixedLength="false" />
+          <Property Name="CommentTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Article" Relationship="DB.Model.Models.article_commentid" FromRole="Comments" ToRole="Articles" />
+          <NavigationProperty Name="User" Relationship="DB.Model.Models.FK_Comment_User" FromRole="Comments" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="Operation" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Code" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="RoleCode" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="DB.Model.Models.fk_userid" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ParentID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="AddDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Articles" Relationship="DB.Model.Models.subject_articleid" FromRole="Subjects" ToRole="Articles" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TextContent">
+          <Key>
+            <PropertyRef Name="ContentID" />
+          </Key>
+          <Property Name="ContentID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="ContentType" Type="Int64" Nullable="false" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="2000" Unicode="true" FixedLength="false" />
+          <Property Name="ArticleID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Article" Relationship="DB.Model.Models.FK_TextContents_Articles" FromRole="TextContents" ToRole="Articles" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Pwd" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="true" />
+          <Property Name="LastLoginTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RegistTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RoleID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="IsAdmin" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Articles" Relationship="DB.Model.Models.FK_Article_User" FromRole="Users" ToRole="Articles" />
+          <NavigationProperty Name="Comments" Relationship="DB.Model.Models.FK_Comment_User" FromRole="Users" ToRole="Comments" />
+          <NavigationProperty Name="Role" Relationship="DB.Model.Models.fk_userid" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="UsersVotes" Relationship="DB.Model.Models.User_uervoteid" FromRole="Users" ToRole="UsersVote" />
+        </EntityType>
+        <EntityType Name="UsersVote">
+          <Key>
+            <PropertyRef Name="UserVoteID" />
+          </Key>
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="VoteID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="VoteItemID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="UserVoteID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="User" Relationship="DB.Model.Models.User_uervoteid" FromRole="UsersVote" ToRole="Users" />
+          <NavigationProperty Name="VoteItem" Relationship="DB.Model.Models.VoteItem_UserVoteid" FromRole="UsersVote" ToRole="VoteItems" />
+        </EntityType>
+        <EntityType Name="VoteItem">
+          <Key>
+            <PropertyRef Name="VoteItemID" />
+          </Key>
+          <Property Name="VoteItemID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="VoteItemContent" Type="String" Nullable="false" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="VoteID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="UsersVotes" Relationship="DB.Model.Models.VoteItem_UserVoteid" FromRole="VoteItems" ToRole="UsersVote" />
+          <NavigationProperty Name="Vote" Relationship="DB.Model.Models.Vote_VoteItemid" FromRole="VoteItems" ToRole="Votes" />
+        </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="VoteID" />
+          </Key>
+          <Property Name="VoteID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <Property Name="IsMultiple" Type="Int32" Nullable="false" />
+          <Property Name="ArticleID" Type="String" Nullable="false" MaxLength="36" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Article" Relationship="DB.Model.Models.FK_Votes_Articles" FromRole="Votes" ToRole="Articles" />
+          <NavigationProperty Name="VoteItems" Relationship="DB.Model.Models.Vote_VoteItemid" FromRole="Votes" ToRole="VoteItems" />
+        </EntityType>
+        <Association Name="article_commentid">
+          <End Role="Articles" Type="DB.Model.Models.Article" Multiplicity="1" />
+          <End Role="Comments" Type="DB.Model.Models.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articles">
+              <PropertyRef Name="ArticleID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="ArticleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_User">
+          <End Role="Users" Type="DB.Model.Models.User" Multiplicity="1" />
+          <End Role="Articles" Type="DB.Model.Models.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Articles">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TextContents_Articles">
+          <End Role="Articles" Type="DB.Model.Models.Article" Multiplicity="1" />
+          <End Role="TextContents" Type="DB.Model.Models.TextContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articles">
+              <PropertyRef Name="ArticleID" />
+            </Principal>
+            <Dependent Role="TextContents">
+              <PropertyRef Name="ArticleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Votes_Articles">
+          <End Role="Articles" Type="DB.Model.Models.Article" Multiplicity="1" />
+          <End Role="Votes" Type="DB.Model.Models.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articles">
+              <PropertyRef Name="ArticleID" />
+            </Principal>
+            <Dependent Role="Votes">
+              <PropertyRef Name="ArticleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subject_articleid">
+          <End Role="Subjects" Type="DB.Model.Models.Subject" Multiplicity="1" />
+          <End Role="Articles" Type="DB.Model.Models.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="Articles">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_User">
+          <End Role="Users" Type="DB.Model.Models.User" Multiplicity="1" />
+          <End Role="Comments" Type="DB.Model.Models.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_userid">
+          <End Role="Roles" Type="DB.Model.Models.Role" Multiplicity="1" />
+          <End Role="Users" Type="DB.Model.Models.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_uervoteid">
+          <End Role="Users" Type="DB.Model.Models.User" Multiplicity="1" />
+          <End Role="UsersVote" Type="DB.Model.Models.UsersVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UsersVote">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VoteItem_UserVoteid">
+          <End Role="VoteItems" Type="DB.Model.Models.VoteItem" Multiplicity="1" />
+          <End Role="UsersVote" Type="DB.Model.Models.UsersVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoteItems">
+              <PropertyRef Name="VoteItemID" />
+            </Principal>
+            <Dependent Role="UsersVote">
+              <PropertyRef Name="VoteItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Vote_VoteItemid">
+          <End Role="Votes" Type="DB.Model.Models.Vote" Multiplicity="1" />
+          <End Role="VoteItems" Type="DB.Model.Models.VoteItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Votes">
+              <PropertyRef Name="VoteID" />
+            </Principal>
+            <Dependent Role="VoteItems">
+              <PropertyRef Name="VoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBModelModelsStoreContainer" CdmEntityContainer="LasyDBContext">
+          <EntitySetMapping Name="Articles">
+            <EntityTypeMapping TypeName="DB.Model.Models.Article">
+              <MappingFragment StoreEntitySet="Articles">
+                <ScalarProperty Name="ArticleID" ColumnName="ArticleID" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Tittle" ColumnName="Tittle" />
+                <ScalarProperty Name="ContentID" ColumnName="ContentID" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="DB.Model.Models.Comment">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="CommentID" ColumnName="CommentID" />
+                <ScalarProperty Name="ArticleID" ColumnName="ArticleID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Content" ColumnName="Comment" />
+                <ScalarProperty Name="CommentTime" ColumnName="CommentTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="DB.Model.Models.Permission">
+              <MappingFragment StoreEntitySet="Permissions">
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="DB.Model.Models.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="DB.Model.Models.Subject">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="AddDateTime" ColumnName="AddDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DB.Model.Models.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TextContents">
+            <EntityTypeMapping TypeName="DB.Model.Models.TextContent">
+              <MappingFragment StoreEntitySet="TextContents">
+                <ScalarProperty Name="ContentID" ColumnName="ContentID" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ArticleID" ColumnName="ArticleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DB.Model.Models.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Pwd" ColumnName="Pwd" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastLoginTime" ColumnName="LastLoginTime" />
+                <ScalarProperty Name="RegistTime" ColumnName="RegistTime" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersVotes">
+            <EntityTypeMapping TypeName="DB.Model.Models.UsersVote">
+              <MappingFragment StoreEntitySet="UsersVote">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="VoteID" ColumnName="VoteID" />
+                <ScalarProperty Name="VoteItemID" ColumnName="VoteItemID" />
+                <ScalarProperty Name="UserVoteID" ColumnName="UserVoteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VoteItems">
+            <EntityTypeMapping TypeName="DB.Model.Models.VoteItem">
+              <MappingFragment StoreEntitySet="VoteItems">
+                <ScalarProperty Name="VoteItemID" ColumnName="VoteItemID" />
+                <ScalarProperty Name="VoteItemContent" ColumnName="VoteItemContent" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="VoteID" ColumnName="VoteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Votes">
+            <EntityTypeMapping TypeName="DB.Model.Models.Vote">
+              <MappingFragment StoreEntitySet="Votes">
+                <ScalarProperty Name="VoteID" ColumnName="VoteID" />
+                <ScalarProperty Name="IsMultiple" ColumnName="IsMultiple" />
+                <ScalarProperty Name="ArticleID" ColumnName="ArticleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

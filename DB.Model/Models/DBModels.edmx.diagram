@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5a230f9f7c18455cac3030f1c2b88bd2" Name="关系图1">
+        <EntityTypeShape EntityType="DB.Model.Models.Article" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB.Model.Models.Comment" Width="1.5" PointX="7.5" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB.Model.Models.Permission" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB.Model.Models.Role" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB.Model.Models.Subject" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB.Model.Models.sysdiagram" Width="1.5" PointX="2.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB.Model.Models.TextContent" Width="1.5" PointX="7.5" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB.Model.Models.User" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB.Model.Models.UsersVote" Width="1.5" PointX="12" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB.Model.Models.VoteItem" Width="1.5" PointX="9.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB.Model.Models.Vote" Width="1.5" PointX="7.5" PointY="9.25" IsExpanded="true" />
+        <AssociationConnector Association="DB.Model.Models.article_commentid" ManuallyRouted="false" />
+        <AssociationConnector Association="DB.Model.Models.FK_Article_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DB.Model.Models.FK_TextContents_Articles" ManuallyRouted="false" />
+        <AssociationConnector Association="DB.Model.Models.FK_Votes_Articles" ManuallyRouted="false" />
+        <AssociationConnector Association="DB.Model.Models.subject_articleid" ManuallyRouted="false" />
+        <AssociationConnector Association="DB.Model.Models.FK_Comment_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DB.Model.Models.fk_userid" ManuallyRouted="false" />
+        <AssociationConnector Association="DB.Model.Models.User_uervoteid" ManuallyRouted="false" />
+        <AssociationConnector Association="DB.Model.Models.VoteItem_UserVoteid" ManuallyRouted="false" />
+        <AssociationConnector Association="DB.Model.Models.Vote_VoteItemid" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
