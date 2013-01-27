@@ -25,10 +25,5 @@ namespace ViewModel.Models
         [Required]
         [Display(Name = "评论时间")]
         public DateTime CommentTime { get; set; }
-
-        public static void Add(CommentModel commentModel)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

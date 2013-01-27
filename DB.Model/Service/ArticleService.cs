@@ -12,6 +12,41 @@ namespace DB.Model.Service
 {
     public class ArticleService:DBABase
     {
+        public Article PostToArticle(PostModelBase po)
+        {
+            Article article = this.GetNewArticle();
+            article.Tittle = po.TopicName;
+            article.AddTime = po.AddDateTime;
+            article.ArticleID = po.SubjectID;
+            article.Subject.Name = po.SubjectName;
+            return null;
+        }
+
+        private TextContent PostContent2TextContent(ContentPostModel post,Article article)
+        {
+            return new TextContent() 
+            {
+                Content=post.TopicContent,
+                 ArticleID=article.ArticleID
+            };
+        }
+
+        private Vote VoteContent2VoteContent(VotePostModle post, Article article)
+        {
+            
+            var vote= new Vote() 
+            {
+                 ArticleID=article.ArticleID,
+            };
+            post.VoteItems.ForEach(item=>
+            {
+                vote.VoteItems.Add(new VoteItem() 
+                {
+                });
+            });
+            return vote;
+        }
+
         protected System.Data.Entity.DbSet<Article> Articles
         {
             get { return this.DBContext.Articles; }
@@ -101,6 +136,7 @@ namespace DB.Model.Service
                     TopicName = item.Tittle
                 });
             }
+            
             return postModels;
                        
         }
@@ -142,16 +178,34 @@ namespace DB.Model.Service
 
         public ArticleOpResult AddNewArticle(PostModelBase model)
         {
+            Article article = this.GetNewArticle();
+            article.Tittle = model.TopicName;
+            if(model.PostContentType == PostContentType.TextContents)
+            {
+               var temp= model as ContentPostModel;
+               article.TextContents.Add(new TextContent() { });
+            }
+            else
+            {
+                var temp=model as VotePostModle;
+                article.Votes.Add(new Vote() { });
+            }
+
+            this.Articles.Add(article);
+            this.DBContext.SaveChanges();
             throw new NotImplementedException();
         }
 
         public PostModelBase GetPostModelById(string id)
         {
-            throw new NotImplementedException();
+            var post = from item in this.Articles where item.ArticleID == id select item;
+            return post.ToList().FirstOrDefault();
+           // throw new NotImplementedException();
         }
 
         public void DeletePostById(string id)
         {
+
             throw new NotImplementedException();
         }
     }
