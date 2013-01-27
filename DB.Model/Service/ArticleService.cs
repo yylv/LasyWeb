@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DB.Model.Models;
 using DB.Model.Objects;
+using ViewModel.Models;
 
 namespace DB.Model.Service
 {
@@ -61,6 +62,21 @@ namespace DB.Model.Service
             article.UpdateTime = DateTime.Now;
             this.Articles.Add(article);
             return new ArticleOpResult() { HasError = false, ArticleID = article.ArticleID };
+        }
+
+        public List<PostModel> ListAllPosts()
+        {
+
+            var list = from item in this.Articles
+                       select new PostModel()
+                       {
+                           AddDateTime = item.AddTime,
+                           SubjectID = item.SubjectID,
+                           SubjectName = item.Subject.Name,
+                           TopicContent = item.TextContents.FirstOrDefault().Content,
+                           TopicName = item.Tittle
+                       };
+            return list.ToList();
         }
     }
 
