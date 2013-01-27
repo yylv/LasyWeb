@@ -12,7 +12,7 @@ namespace DB.Model.Service
 {
     public class ArticleService:DBABase
     {
-        public Article PostToArticle(PostModelBase po)
+        public Article PostModelToArticle(PostModelBase po)
         {
             Article article = this.GetNewArticle();
             article.Tittle = po.TopicName;
@@ -22,7 +22,7 @@ namespace DB.Model.Service
             return null;
         }
 
-        private TextContent PostContent2TextContent(ContentPostModel post,Article article)
+        private TextContent ContentModel2TextContent(ContentPostModel post,Article article)
         {
             return new TextContent() 
             {
@@ -154,7 +154,6 @@ namespace DB.Model.Service
                         PostContentType = PostContentType.TextContents,
                         TopicContent = textContent.Content
                     };
-                    break;
                 case PostContentType.Votes:
                     var item= new VotePostModle()
                     {
@@ -168,10 +167,8 @@ namespace DB.Model.Service
                     var list = from it in voteItems select new VotesItemModel() { };
                     item.VoteItems = list.ToList();
                     return item;
-                    break;
                 default:
                     return null;
-                    break;
             }
             
         }
@@ -199,8 +196,9 @@ namespace DB.Model.Service
         public PostModelBase GetPostModelById(string id)
         {
             var post = from item in this.Articles where item.ArticleID == id select item;
-            return post.ToList().FirstOrDefault();
+            //return post.ToList().FirstOrDefault();
            // throw new NotImplementedException();
+            return null;
         }
 
         public void DeletePostById(string id)

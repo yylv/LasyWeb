@@ -1,5 +1,33 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@model ViewModel.Models.PostModelBaseList
+
+@{
+    ViewBag.Title = Model.SubjectName;
 }
 
-<h2>Index</h2>
+<h2>@Model.SubjectName</h2>
+
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<div>
+    <table>
+        <tbody>
+            <tr>
+                <td>@Html.LabelFor(m=>m.SubjectName)</td>
+                <td></td>
+            </tr>
+        @foreach (var item in Model.PostModels)
+	    {
+            <tr>
+                <td>
+		                <a href="Details/@item.PostId">@item.TopicName</a>
+                </td>
+                <td><a href="Details/@item.PostId">查看</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+    
